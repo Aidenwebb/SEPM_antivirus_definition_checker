@@ -1,0 +1,10 @@
+{
+  "database_server": "MSSQL_DB_SERVER",
+  "database_port": 1433,
+  "database_user": "SEPM_ReadOnlyUser",
+  "database_pass": "SEPM_ROU_Pass",
+  "database_name": "SEPM_DB_NAME",
+  "execution_log_file": "SEPM_av_check.log",
+  "report_file": "report.csv",
+  "report_threshold_older_than_days": 14
+}
