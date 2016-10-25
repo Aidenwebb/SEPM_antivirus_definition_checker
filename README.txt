@@ -2,7 +2,7 @@
 
 ## Installation
 
-Just run the file
+Log in to SEPM to update the database then just run the av_check program
 
 ## Usage
 
