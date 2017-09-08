@@ -8,7 +8,11 @@ import logging
 FORMAT = '%(asctime)-15s - %(message)s'
 
 def sepm_query(server, user, password, db_name):
-    conn = pymssql.connect(server, user, password, db_name)
+    try:
+        conn = pymssql.connect(server, user, password, db_name)
+    except Exception as e:
+        logging.error(e)
+        raise(e)
     cursor = conn.cursor()
     statement = """
         select i.COMPUTER_NAME
@@ -26,9 +30,9 @@ def sepm_query(server, user, password, db_name):
     result = cursor.fetchall()
     return result
 
-def write_csv(file_path, pc_name, av_date, last_seen, diff_av_last_seen, sepm_path, user_login):
+def write_csv(file_path, ticket_id, pc_name, av_date, last_seen, diff_av_last_seen, sepm_path, user_login):
     with open(file_path, 'a', newline='') as csvfile:
-        data = [pc_name, av_date, last_seen, diff_av_last_seen, sepm_path, user_login]
+        data = [ticket_id, pc_name, av_date, last_seen, diff_av_last_seen, sepm_path, user_login]
         print_row(*data)
 
         file = csv.writer(csvfile, delimiter=',')
@@ -38,8 +42,8 @@ def write_csv(file_path, pc_name, av_date, last_seen, diff_av_last_seen, sepm_pa
             logging.error(e)
             logging.error("{0} - {1} ".format(data, e))
 
-def print_row(pc_name, rev_date, seen_date, date_diff, SEPM_path, last_user):
+def print_row(ticket_id, pc_name, rev_date, seen_date, date_diff, SEPM_path, last_user):
     print(
-        "{:15} | {:14} | {:14} | {:9} | {:<30} | {:<20}".format(pc_name, str(rev_date), str(seen_date), date_diff,
+        "{:15} | {:5}  | {:14} | {:14} | {:9} | {:<30} | {:<20}".format(ticket_id, pc_name, str(rev_date), str(seen_date), date_diff,
                                                                               str(SEPM_path), last_user,
                                                                               end=' '))
