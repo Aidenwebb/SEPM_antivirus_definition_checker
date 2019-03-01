@@ -58,3 +58,5 @@ config.json
 *hardcoded*
 *.csv
 *.log
+*.*_jb_old_*
+*.*_jb_tmp_*
